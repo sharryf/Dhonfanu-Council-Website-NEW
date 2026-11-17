@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3AB0BD"/>
+      <stop offset=".45" stop-color="#167D8D"/>
+      <stop offset="1" stop-color="#071B2B"/>
+    </linearGradient>
+    <g id="manta">
+      <path d="M0 0c-60-34-150-40-230 6 60-2 110 14 150 44-10 26-12 50-6 72 14-22 34-38 60-48l26 4 26-4c26 10 46 26 60 48 6-22 4-46-6-72 40-30 90-46 150-44C150-40 60-34 0 0z" fill="#071B2B"/>
+      <path d="M-22 4c-8-14-8-28 0-40 6 10 8 22 6 36zM22 4c8-14 8-28 0-40-6 10-8 22-6 36z" fill="#071B2B"/>
+      <path d="M0 78c2 60-6 110-30 150" fill="none" stroke="#071B2B" stroke-width="5" stroke-linecap="round"/>
+      <path d="M-40 40c26 10 54 10 80 0-10 22-24 34-40 36s-30-14-40-36z" fill="#FFFFFF" opacity=".16"/>
+    </g>
+  </defs>
+  <rect width="1200" height="750" fill="url(#water)"/>
+
+  <!-- light rays -->
+  <g fill="#FFFFFF" opacity=".1">
+    <path d="M180 0h110L120 750H-60z"/>
+    <path d="M470 0h80L420 750H300z"/>
+    <path d="M760 0h130L860 750H690z"/>
+    <path d="M1040 0h70l110 750h-130z"/>
+  </g>
+
+  <!-- plankton -->
+  <g fill="#B9E4E8" opacity=".55">
+    <circle cx="130" cy="210" r="4"/><circle cx="260" cy="420" r="3"/><circle cx="380" cy="150" r="3"/>
+    <circle cx="540" cy="520" r="4"/><circle cx="700" cy="250" r="3"/><circle cx="860" cy="420" r="4"/>
+    <circle cx="1010" cy="180" r="3"/><circle cx="1100" cy="540" r="4"/><circle cx="950" cy="620" r="3"/>
+    <circle cx="200" cy="600" r="3"/><circle cx="620" cy="90" r="3"/><circle cx="440" cy="330" r="2.500"/>
+  </g>
+
+  <!-- mantas -->
+  <use xlink:href="#manta" href="#manta" transform="translate(620 320) scale(1.25) rotate(-8)"/>
+  <use xlink:href="#manta" href="#manta" transform="translate(260 180) scale(.6) rotate(12)" opacity=".75"/>
+  <use xlink:href="#manta" href="#manta" transform="translate(980 170) scale(.45) rotate(-18)" opacity=".6"/>
+  <use xlink:href="#manta" href="#manta" transform="translate(1010 520) scale(.7) rotate(16)" opacity=".8"/>
+
+  <!-- reef -->
+  <path d="M0 750v-70c60-30 110-34 160-12 40-46 100-56 170-24 50-30 110-28 160 6 60-34 130-32 190 8 60-36 130-34 200 4 50-34 110-36 170-6 50-24 100-22 150 4v90z" fill="#071B2B"/>
+  <g fill="#167D8D" opacity=".8">
+    <path d="M140 750c-4-40 6-70 28-92 4 34 0 64-12 92zM196 750c0-30 10-52 28-68 2 26-2 48-12 68z"/>
+    <path d="M560 750c-6-44 4-78 30-102 6 38 0 72-14 102zM620 750c0-32 12-56 32-72 2 28-4 52-16 72z"/>
+    <path d="M940 750c-4-40 6-70 28-92 4 34 0 64-12 92zM1000 750c0-30 10-52 28-68 2 26-2 48-12 68z"/>
+  </g>
+</svg>

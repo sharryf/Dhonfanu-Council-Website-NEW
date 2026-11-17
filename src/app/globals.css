@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Dhonfanu Council brand system
+   Deep Navy  #071B2B  top bar, navigation, footer, hero overlays, headings
+   Brand Teal #167D8D  primary buttons, active links, icons, accents
+   Soft Aqua  #B9E4E8  badges, card accents, hover states, dividers
+   Neutral    #EEEEEE  page canvas and input backgrounds (cards are #FFFFFF)
+--------------------------------------------------------------------------- */
+@theme {
+  --color-navy: #071b2b;
+  --color-navy-soft: #0e2a41;
+  --color-teal: #167d8d;
+  --color-teal-dark: #0f6371;
+  --color-aqua: #b9e4e8;
+  --color-aqua-soft: #e3f4f6;
+  --color-canvas: #eeeeee;
+  --color-surface: #ffffff;
+  --color-danger: #b42318;
+
+  /* Latin glyphs come from Plus Jakarta Sans, Thaana glyphs from Noto Sans
+     Thaana, with Faruma as the local fallback. One stack serves both languages. */
+  --font-sans: var(--font-jakarta), var(--font-thaana-noto), "Faruma", "MV Boli", ui-sans-serif, system-ui, sans-serif;
+  --font-thaana: var(--font-thaana-noto), "Faruma", "MV Boli", var(--font-jakarta), sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(7 27 43 / 0.04), 0 8px 24px -12px rgb(7 27 43 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(7 27 43 / 0.06), 0 18px 40px -16px rgb(7 27 43 / 0.25);
+}
+
+/* Faruma: uses the copy installed on the visitor's device. To self-host it,
+   place faruma.woff2 in /public/fonts and add:  url("/fonts/faruma.woff2") format("woff2")  */
+@font-face {
+  font-family: "Faruma";
+  src: local("Faruma"), local("MV Faruma");
+  font-display: swap;
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+FDF2, U+FDFD;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-canvas);
+  color: rgb(7 27 43 / 0.82);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Thaana needs more vertical room for its vowel marks (fili). */
+html[lang="dv"] body {
+  line-height: 1.95;
+}
+html[lang="dv"] :is(h1, h2, h3, h4) {
+  line-height: 1.7;
+}
+html[lang="dv"] * {
+  letter-spacing: 0 !important;
+}
+[lang="dv"]:not(html) {
+  font-family: var(--font-thaana);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-aqua);
+  color: var(--color-navy);
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .card {
+    @apply rounded-2xl bg-surface shadow-card ring-1 ring-navy/5;
+  }
+  .btn,
+  .btn-primary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply bg-teal text-white hover:bg-teal-dark;
+  }
+  .btn-outline {
+    @apply bg-surface text-navy ring-1 ring-navy/15 hover:bg-aqua-soft hover:ring-teal/40;
+  }
+  .btn-ghost {
+    @apply text-teal hover:bg-aqua-soft;
+  }
+  .btn-danger {
+    @apply bg-surface text-danger ring-1 ring-danger/30 hover:bg-danger hover:text-white;
+  }
+  .badge,
+  .badge-aqua,
+  .badge-teal,
+  .badge-navy,
+  .badge-muted {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap;
+  }
+  .badge-aqua {
+    @apply bg-aqua text-navy;
+  }
+  .badge-teal {
+    @apply bg-teal text-white;
+  }
+  .badge-navy {
+    @apply bg-navy text-white;
+  }
+  .badge-muted {
+    @apply bg-canvas text-navy/60 ring-1 ring-navy/10;
+  }
+  .input {
+    @apply w-full rounded-xl border border-navy/10 bg-canvas px-3.5 py-2.5 text-sm text-navy placeholder:text-navy/40 transition-colors focus:border-teal focus:bg-surface focus:outline-none focus:ring-2 focus:ring-teal/20;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-navy;
+  }
+  .section-title {
+    @apply text-2xl font-bold text-navy sm:text-[1.7rem];
+  }
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-widest text-teal;
+  }
+}
+
+/* --- Urgent notice ticker -------------------------------------------------- */
+@keyframes ticker-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ticker-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-ltr var(--ticker-duration, 40s) linear infinite;
+}
+[dir="rtl"] .ticker-track {
+  animation-name: ticker-rtl;
+}
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* --- Article / rich text --------------------------------------------------- */
+.prose-civic {
+  color: rgb(7 27 43 / 0.85);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+html[lang="dv"] .prose-civic,
+.prose-civic[lang="dv"] {
+  line-height: 2.15;
+}
+.prose-civic > * + * {
+  margin-top: 1.1em;
+}
+.prose-civic :is(h2, h3, h4) {
+  color: var(--color-navy);
+  font-weight: 700;
+  margin-top: 1.6em;
+}
+.prose-civic h2 {
+  font-size: 1.45rem;
+}
+.prose-civic h3 {
+  font-size: 1.2rem;
+}
+.prose-civic :is(ul, ol) {
+  padding-inline-start: 1.4em;
+}
+.prose-civic ul {
+  list-style: disc;
+}
+.prose-civic ol {
+  list-style: decimal;
+}
+.prose-civic li + li {
+  margin-top: 0.35em;
+}
+.prose-civic li::marker {
+  color: var(--color-teal);
+}
+.prose-civic a {
+  color: var(--color-teal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-civic blockquote {
+  border-inline-start: 4px solid var(--color-aqua);
+  background: var(--color-aqua-soft);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 0.75rem 1.1rem;
+  color: var(--color-navy);
+}
+[dir="rtl"] .prose-civic blockquote {
+  border-radius: 0.75rem 0 0 0.75rem;
+}
+
+/* Decorative wave pattern used on navy bands */
+.navy-pattern {
+  background-color: var(--color-navy);
+  background-image:
+    radial-gradient(60rem 22rem at 100% 0%, rgb(22 125 141 / 0.35), transparent 60%),
+    radial-gradient(40rem 18rem at 0% 100%, rgb(185 228 232 / 0.1), transparent 60%);
+}

@@ -1,0 +1,436 @@
+export type Locale = "en" | "dv";
+export const LOCALES: Locale[] = ["dv", "en"];
+export const DEFAULT_LOCALE: Locale = "dv";
+export const LOCALE_COOKIE = "locale";
+
+export function isLocale(value: unknown): value is Locale {
+  return value === "en" || value === "dv";
+}
+
+/**
+ * Returns the text for the active language, falling back to the other
+ * language when the preferred one was left blank in the CMS.
+ */
+export function pick(locale: Locale, en?: string | null, dv?: string | null): string {
+  const preferred = (locale === "dv" ? dv : en)?.trim();
+  const other = (locale === "dv" ? en : dv)?.trim();
+  return preferred || other || "";
+}
+
+const en = {
+  dir: "ltr",
+  langName: "English",
+  switchTo: "ދިވެހި",
+  atoll: "Baa Atoll, Republic of Maldives",
+  skipToContent: "Skip to content",
+  menu: "Menu",
+  close: "Close",
+
+  nav: {
+    home: "Home",
+    announcements: "Announcements",
+    news: "News",
+    council: "The Council",
+    about: "About Dhonfanu",
+    downloads: "Downloads",
+    services: "E-Services",
+    contact: "Contact",
+  },
+
+  common: {
+    search: "Search",
+    searchPlaceholder: "Search announcements, news and downloads…",
+    viewAll: "View all",
+    readMore: "Read more",
+    download: "Download",
+    view: "View",
+    viewPdf: "View PDF",
+    all: "All",
+    published: "Published",
+    deadline: "Deadline",
+    refNo: "Ref. no.",
+    open: "Open",
+    closed: "Closed",
+    noResults: "Nothing to show here yet.",
+    back: "Back",
+    previous: "Previous",
+    next: "Next",
+    page: "Page",
+    of: "of",
+    attachment: "Attachment",
+    category: "Category",
+    hotline: "Hotline",
+    phone: "Phone",
+    viber: "Viber",
+    email: "Email",
+    address: "Address",
+    officeHours: "Office hours",
+    followUs: "Follow us",
+    quickLinks: "Quick links",
+    contactUs: "Contact us",
+    rights: "All rights reserved.",
+    staffLogin: "Staff login",
+    urgent: "Notice",
+    call: "Call",
+    results: "results",
+  },
+
+  annCat: { ALL: "All", NOTICE: "General Notices", TENDER: "Tenders & Bids", JOB: "Jobs" },
+  annCatOne: { NOTICE: "Notice", TENDER: "Tender", JOB: "Vacancy" },
+  newsCat: {
+    COUNCIL: "Council",
+    COMMUNITY: "Community",
+    ENVIRONMENT: "Environment",
+    DEVELOPMENT: "Development",
+    EVENTS: "Events",
+  },
+  docCat: {
+    ALL: "All",
+    FORM: "Forms",
+    REGULATION: "Regulations",
+    BUDGET: "Budgets",
+    PLAN: "Development Plans",
+    REPORT: "Annual Reports",
+    OTHER: "Other",
+  },
+
+  home: {
+    eServices: "E-Services",
+    latestAnnouncements: "Latest announcements",
+    announcementsHint: "Official notices, tenders and job vacancies from the council",
+    latestNews: "News & updates",
+    newsHint: "What is happening on the island",
+    latestDownloads: "Popular downloads",
+    islandTitle: "Discover Dhonfanu",
+    discover: "More about the island",
+    helpTitle: "Have a question, complaint or request?",
+    helpText: "Send it to the council online. Every message gets a reference number and is answered by council staff.",
+    helpCta: "Write to the council",
+    visitOffice: "Visit the council office",
+    allServices: "All services",
+  },
+
+  announcements: {
+    title: "Announcements & Tenders",
+    subtitle: "Official notices, bids and job vacancies published by Dhonfanu Council.",
+    searchPlaceholder: "Search by title or reference number…",
+    empty: "No announcements match your search.",
+    noDeadline: "No deadline",
+    details: "Details",
+    backToList: "All announcements",
+  },
+
+  news: {
+    title: "News & Updates",
+    subtitle: "Stories and updates from the council and the community.",
+    related: "More news",
+    empty: "No news has been published yet.",
+    backToList: "All news",
+  },
+
+  council: {
+    title: "The Council",
+    subtitle: "The people elected and appointed to serve Dhonfanu.",
+    councillors: "Council Members",
+    councillorsHint: "Elected by the people of Dhonfanu",
+    wdc: "Women's Development Committee",
+    wdcHint: "Elected committee working for the social and economic development of women",
+    admin: "Secretariat",
+    adminHint: "Council administration and civil service staff",
+    mission: "Mission",
+    vision: "Vision",
+    term: "Term",
+  },
+
+  about: {
+    title: "About Dhonfanu",
+    subtitle: "A small island community in the heart of the Baa Atoll UNESCO Biosphere Reserve.",
+    facts: "Key facts",
+    facilities: "Island facilities",
+    facilitiesHint: "Public services and facilities on the island",
+    location: "Where we are",
+    unesco: "UNESCO Biosphere Reserve",
+  },
+
+  downloads: {
+    title: "Downloads",
+    subtitle: "Forms, regulations, budgets, development plans and reports.",
+    searchPlaceholder: "Type to search documents…",
+    empty: "No documents match your search.",
+    documents: "documents",
+  },
+
+  services: {
+    title: "E-Services",
+    subtitle: "Council services you can start online.",
+    apply: "Start request",
+    open: "Open",
+    howTitle: "How it works",
+    step1Title: "Choose a service",
+    step1Text: "Pick the service you need and download the form if one is required.",
+    step2Title: "Send your request",
+    step2Text: "Submit the online form. You will get a reference number straight away.",
+    step3Title: "We get back to you",
+    step3Text: "Council staff review the request and contact you by phone or email.",
+    empty: "Services will be listed here soon.",
+  },
+
+  contact: {
+    title: "Contact the Council",
+    subtitle: "Send an inquiry, complaint or service request. We are here to help.",
+    formTitle: "Send a message",
+    type: "Type of message",
+    types: { INQUIRY: "Inquiry", COMPLAINT: "Complaint", SERVICE: "Service request", FEEDBACK: "Feedback" },
+    service: "Related service",
+    serviceNone: "Not related to a service",
+    name: "Full name",
+    phone: "Phone number",
+    email: "Email address",
+    optional: "optional",
+    subject: "Subject",
+    message: "Message",
+    send: "Send message",
+    sending: "Sending…",
+    successTitle: "Thank you. Your message has been received.",
+    successText: "Council staff will review it and contact you. Please keep your reference number:",
+    another: "Send another message",
+    errorRequired: "Please fill in your name, a phone number or email, and a message.",
+    errorEmail: "Please enter a valid email address.",
+    errorTooLong: "Your message is too long. Please shorten it.",
+    errorRate: "Too many messages were sent from this connection. Please try again later.",
+    errorGeneric: "Something went wrong. Please try again.",
+    privacy: "Your details are only used by council staff to respond to this message.",
+    infoTitle: "Council office",
+    findUs: "Find us",
+    openMap: "Open larger map",
+  },
+
+  search: {
+    title: "Search",
+    resultsFor: "Results for",
+    empty: "No results found. Try a different word.",
+    hint: "Search across announcements, news and downloads.",
+    announcements: "Announcements",
+    news: "News",
+    downloads: "Downloads",
+  },
+
+  notFound: {
+    title: "Page not found",
+    text: "The page you are looking for may have been moved or no longer exists.",
+    home: "Back to home",
+  },
+};
+
+export type Dict = typeof en;
+
+const dv: Dict = {
+  dir: "rtl",
+  langName: "ދިވެހި",
+  switchTo: "English",
+  atoll: "މާޅޮސްމަޑުލު ދެކުނުބުރި، ދިވެހިރާއްޖެ",
+  skipToContent: "މައި ބަޔަށް",
+  menu: "މެނޫ",
+  close: "ލައްޕާ",
+
+  nav: {
+    home: "ފުރަތަމަ ޞަފްޙާ",
+    announcements: "އިޢުލާންތައް",
+    news: "ޚަބަރު",
+    council: "ކައުންސިލް",
+    about: "ދޮންފަނު",
+    downloads: "ޑައުންލޯޑްސް",
+    services: "ޚިދުމަތްތައް",
+    contact: "ގުޅުއްވުމަށް",
+  },
+
+  common: {
+    search: "ހޯދާ",
+    searchPlaceholder: "އިޢުލާން، ޚަބަރު އަދި ޑައުންލޯޑްސް ހޯދާ…",
+    viewAll: "ހުރިހާ ބައްލަވާ",
+    readMore: "އިތުރަށް ވިދާޅުވޭ",
+    download: "ޑައުންލޯޑް",
+    view: "ބައްލަވާ",
+    viewPdf: "ޕީޑީއެފް ބައްލަވާ",
+    all: "ހުރިހާ",
+    published: "ޝާއިޢުކުރި ތާރީޚު",
+    deadline: "ސުންގަޑި",
+    refNo: "ނަންބަރު",
+    open: "ހުޅުވިފައި",
+    closed: "ބަންދުވެފައި",
+    noResults: "މިބައިގައި އަދި އެއްވެސް މަޢުލޫމާތެއް ނެތް.",
+    back: "ފަހަތަށް",
+    previous: "ކުރީގެ",
+    next: "ކުރިއަށް",
+    page: "ޞަފްޙާ",
+    of: "/",
+    attachment: "އެޓޭޗްމަންޓް",
+    category: "ބާވަތް",
+    hotline: "ހޮޓްލައިން",
+    phone: "ފޯން",
+    viber: "ވައިބަރ",
+    email: "އީމެއިލް",
+    address: "އެޑްރެސް",
+    officeHours: "ރަސްމީ ގަޑި",
+    followUs: "ސޯޝަލް މީޑިއާ",
+    quickLinks: "ބޭނުންތެރި ލިންކުތައް",
+    contactUs: "ގުޅުއްވުމަށް",
+    rights: "ހުރިހާ ޙައްޤެއް ރައްކާތެރިކުރެވިފައި.",
+    staffLogin: "މުވައްޒަފުންގެ ލޮގިން",
+    urgent: "ސަމާލުކަމަށް",
+    call: "ގުޅުއްވާ",
+    results: "ނަތީޖާ",
+  },
+
+  annCat: { ALL: "ހުރިހާ", NOTICE: "ޢާންމު އިޢުލާން", TENDER: "ބީލަންތައް", JOB: "ވަޒީފާ" },
+  annCatOne: { NOTICE: "އިޢުލާން", TENDER: "ބީލަން", JOB: "ވަޒީފާ" },
+  newsCat: {
+    COUNCIL: "ކައުންސިލް",
+    COMMUNITY: "މުޖުތަމަޢު",
+    ENVIRONMENT: "ތިމާވެށި",
+    DEVELOPMENT: "ތަރައްޤީ",
+    EVENTS: "ޙަރަކާތްތައް",
+  },
+  docCat: {
+    ALL: "ހުރިހާ",
+    FORM: "ފޯމުތައް",
+    REGULATION: "ޤަވާޢިދުތައް",
+    BUDGET: "ބަޖެޓް",
+    PLAN: "ތަރައްޤީގެ ޕްލޭންތައް",
+    REPORT: "އަހަރީ ރިޕޯޓުތައް",
+    OTHER: "އެހެނިހެން",
+  },
+
+  home: {
+    eServices: "ޚިދުމަތްތައް",
+    latestAnnouncements: "އެންމެ ފަހުގެ އިޢުލާންތައް",
+    announcementsHint: "ކައުންސިލުން ކުރާ ރަސްމީ އިޢުލާންތަކާއި، ބީލަންތަކާއި، ވަޒީފާގެ ފުރުޞަތުތައް",
+    latestNews: "ޚަބަރާއި މަޢުލޫމާތު",
+    newsHint: "ރަށުގައި ހިނގަމުންދާ ކަންކަން",
+    latestDownloads: "ޑައުންލޯޑްސް",
+    islandTitle: "ދޮންފަނު ދެނެގަންނަވާ",
+    discover: "ރަށާ ބެހޭ އިތުރު މަޢުލޫމާތު",
+    helpTitle: "ސުވާލެއް، ޝަކުވާއެއް ނުވަތަ ޚިދުމަތަކަށް އެދެން ބޭނުންތަ؟",
+    helpText: "އޮންލައިންކޮށް ކައުންސިލަށް ފޮނުއްވާ. ކޮންމެ މެސެޖަކަށްވެސް ރެފަރެންސް ނަންބަރެއް ލިބި، ކައުންސިލްގެ މުވައްޒަފުން ޖަވާބު ދެއްވާނެ.",
+    helpCta: "ކައުންސިލަށް ފޮނުއްވާ",
+    visitOffice: "ކައުންސިލް އިދާރާ",
+    allServices: "ހުރިހާ ޚިދުމަތްތައް",
+  },
+
+  announcements: {
+    title: "އިޢުލާންތަކާއި ބީލަންތައް",
+    subtitle: "ދޮންފަނު ކައުންސިލުން ޝާއިޢުކުރާ ރަސްމީ އިޢުލާންތަކާއި، ބީލަންތަކާއި، ވަޒީފާގެ ފުރުޞަތުތައް.",
+    searchPlaceholder: "ސުރުޚީ ނުވަތަ ނަންބަރުން ހޯދާ…",
+    empty: "ހޯއްދެވި ގޮތަށް އެއްވެސް އިޢުލާނެއް ނުފެނުނު.",
+    noDeadline: "ސުންގަޑިއެއް ނެތް",
+    details: "ތަފްޞީލު",
+    backToList: "ހުރިހާ އިޢުލާންތައް",
+  },
+
+  news: {
+    title: "ޚަބަރާއި މަޢުލޫމާތު",
+    subtitle: "ކައުންސިލާއި ރަށުގެ މުޖުތަމަޢުގެ ޚަބަރުތައް.",
+    related: "އިތުރު ޚަބަރު",
+    empty: "އަދި އެއްވެސް ޚަބަރެއް ޝާއިޢުކޮށްފައެއް ނުވޭ.",
+    backToList: "ހުރިހާ ޚަބަރު",
+  },
+
+  council: {
+    title: "ކައުންސިލް",
+    subtitle: "ދޮންފަނުގެ ރައްޔިތުންނަށް ޚިދުމަތްކުރުމަށް އިންތިޚާބުކުރެވި، ޢައްޔަންކުރެވިފައިވާ ބޭފުޅުން.",
+    councillors: "ކައުންސިލްގެ މެންބަރުން",
+    councillorsHint: "ދޮންފަނުގެ ރައްޔިތުން އިންތިޚާބުކޮށްފައިވާ ބޭފުޅުން",
+    wdc: "އަންހެނުންގެ ތަރައްޤީއަށް މަސައްކަތްކުރާ ކޮމިޓީ",
+    wdcHint: "އަންހެނުންގެ އިޖްތިމާޢީ އަދި އިޤްތިޞާދީ ތަރައްޤީއަށް މަސައްކަތްކުރާ އިންތިޚާބީ ކޮމިޓީ",
+    admin: "އިދާރީ ހިންގުން",
+    adminHint: "ކައުންސިލްގެ އިދާރާގެ ވެރިންނާއި މުވައްޒަފުން",
+    mission: "މިޝަން",
+    vision: "ތަޞައްވުރު",
+    term: "ދައުރު",
+  },
+
+  about: {
+    title: "ދޮންފަނުގެ ތަޢާރަފު",
+    subtitle: "ޔުނެސްކޯ ބަޔޮސްފިއަރ ރިޒާރވްގެ ގޮތުގައި ކަނޑައެޅިފައިވާ ބ. އަތޮޅުގެ ހިތްގައިމު ކުޑަ ރަށެއް.",
+    facts: "މުހިންމު މަޢުލޫމާތު",
+    facilities: "ރަށުގެ ވަސީލަތްތައް",
+    facilitiesHint: "ރަށުގައި ހުރި ޢާންމު ޚިދުމަތްތަކާއި ތަންތަން",
+    location: "ރަށް އޮންނަ ތަން",
+    unesco: "ޔުނެސްކޯ ބަޔޮސްފިއަރ ރިޒާރވް",
+  },
+
+  downloads: {
+    title: "ޑައުންލޯޑްސް",
+    subtitle: "ފޯމުތަކާއި، ޤަވާޢިދުތަކާއި، ބަޖެޓާއި، ތަރައްޤީގެ ޕްލޭންތަކާއި ރިޕޯޓުތައް.",
+    searchPlaceholder: "ޑޮކިއުމަންޓް ހޯއްދެވުމަށް ލިޔުއްވާ…",
+    empty: "ހޯއްދެވި ގޮތަށް އެއްވެސް ޑޮކިއުމަންޓެއް ނުފެނުނު.",
+    documents: "ޑޮކިއުމަންޓް",
+  },
+
+  services: {
+    title: "ޚިދުމަތްތައް",
+    subtitle: "އޮންލައިންކޮށް ފެށޭނެ ކައުންސިލްގެ ޚިދުމަތްތައް.",
+    apply: "ޚިދުމަތަށް އެދޭ",
+    open: "ހުޅުވާ",
+    howTitle: "ޚިދުމަތް ލިބޭނެ ގޮތް",
+    step1Title: "ޚިދުމަތެއް ޚިޔާރުކުރައްވާ",
+    step1Text: "ބޭނުންވާ ޚިދުމަތް ޚިޔާރުކުރައްވާ، ފޯމެއް ބޭނުންވާނަމަ ޑައުންލޯޑްކުރައްވާ.",
+    step2Title: "ރިކުއެސްޓް ފޮނުއްވާ",
+    step2Text: "އޮންލައިން ފޯމު ފުރުއްވާ ފޮނުއްވާ. ވަގުތުން ރެފަރެންސް ނަންބަރެއް ލިބޭނެ.",
+    step3Title: "އަޅުގަނޑުމެން ގުޅާނަން",
+    step3Text: "ކައުންސިލްގެ މުވައްޒަފުން ރިކުއެސްޓް ބަލައި، ފޯނުން ނުވަތަ އީމެއިލުން ގުޅާނެ.",
+    empty: "ޚިދުމަތްތައް ވަރަށް އަވަހަށް މިތަނުން ފެންނާނެ.",
+  },
+
+  contact: {
+    title: "ކައުންސިލާ ގުޅުއްވުމަށް",
+    subtitle: "މަޢުލޫމާތު ހޯދުމަށް، ޝަކުވާ ހުށަހެޅުމަށް ނުވަތަ ޚިދުމަތަކަށް އެދުމަށް މެސެޖެއް ފޮނުއްވާ.",
+    formTitle: "މެސެޖެއް ފޮނުއްވާ",
+    type: "މެސެޖުގެ ބާވަތް",
+    types: { INQUIRY: "މަޢުލޫމާތު ހޯދުން", COMPLAINT: "ޝަކުވާ", SERVICE: "ޚިދުމަތަށް އެދުން", FEEDBACK: "ޚިޔާލު" },
+    service: "ގުޅުންހުރި ޚިދުމަތް",
+    serviceNone: "ވަކި ޚިދުމަތަކާ ގުޅުމެއް ނެތް",
+    name: "ފުރިހަމަ ނަން",
+    phone: "ފޯން ނަންބަރު",
+    email: "އީމެއިލް އެޑްރެސް",
+    optional: "މަޖުބޫރެއް ނޫން",
+    subject: "މައުޟޫޢު",
+    message: "މެސެޖް",
+    send: "މެސެޖް ފޮނުއްވާ",
+    sending: "ފޮނުވަނީ…",
+    successTitle: "ޝުކުރިއްޔާ. މެސެޖް ލިބިއްޖެ.",
+    successText: "ކައުންސިލްގެ މުވައްޒަފުން މެސެޖް ބަލައި ގުޅާނެ. ރެފަރެންސް ނަންބަރު ރައްކާކުރައްވާ:",
+    another: "އިތުރު މެސެޖެއް ފޮނުއްވާ",
+    errorRequired: "ނަމާއި، ފޯން ނަންބަރު ނުވަތަ އީމެއިލް އަދި މެސެޖް ލިޔުއްވާ.",
+    errorEmail: "ރަނގަޅު އީމެއިލް އެޑްރެހެއް ލިޔުއްވާ.",
+    errorTooLong: "މެސެޖް މާ ދިގު. ކުރުކޮށްލައްވާ.",
+    errorRate: "މި ކަނެކްޝަނުން މާ ގިނަ މެސެޖް ފޮނުވިއްޖެ. އިރުކޮޅަކުން އަލުން މަސައްކަތްކުރައްވާ.",
+    errorGeneric: "މައްސަލައެއް ދިމާވެއްޖެ. އަލުން މަސައްކަތްކުރައްވާ.",
+    privacy: "ތިޔަ މަޢުލޫމާތު ބޭނުންކުރާނީ ހަމައެކަނި މި މެސެޖަށް ޖަވާބު ދިނުމަށް ކައުންސިލްގެ މުވައްޒަފުންނެވެ.",
+    infoTitle: "ކައުންސިލް އިދާރާ",
+    findUs: "އިދާރާ ހުންނަ ތަން",
+    openMap: "ބޮޑު ޗާޓު ހުޅުވާ",
+  },
+
+  search: {
+    title: "ހޯދުން",
+    resultsFor: "ހޯއްދެވި ލަފްޒު:",
+    empty: "އެއްވެސް ނަތީޖާއެއް ނުފެނުނު. އެހެން ލަފްޒަކުން ހޯއްދަވާ.",
+    hint: "އިޢުލާންތަކާއި، ޚަބަރާއި، ޑައުންލޯޑްސް އިން ހޯއްދަވާ.",
+    announcements: "އިޢުލާންތައް",
+    news: "ޚަބަރު",
+    downloads: "ޑައުންލޯޑްސް",
+  },
+
+  notFound: {
+    title: "ޞަފްޙާ ނުފެނުނު",
+    text: "ތިޔަ ހޯއްދަވާ ޞަފްޙާ ބަދަލުކުރެވިފައި ނުވަތަ ފޮހެލެވިފައި ވެދާނެ.",
+    home: "ފުރަތަމަ ޞަފްޙާއަށް",
+  },
+};
+
+const dictionaries: Record<Locale, Dict> = { en, dv };
+
+export function getDict(locale: Locale): Dict {
+  return dictionaries[locale];
+}

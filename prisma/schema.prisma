@@ -1,0 +1,249 @@
+// Dhonfanu Council portal — data model
+// SQLite is used for zero-config local runs and simple single-VPS deployment.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  name         String   @default("")
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Single-row table (id = 1) holding everything staff can change site-wide.
+model SiteConfig {
+  id Int @id @default(1)
+
+  councilNameEn String @default("Dhonfanu Council")
+  councilNameDv String @default("ދޮންފަނު ކައުންސިލް")
+  taglineEn     String @default("")
+  taglineDv     String @default("")
+  logoUrl       String @default("")
+
+  heroImageUrl   String @default("")
+  heroTitleEn    String @default("")
+  heroTitleDv    String @default("")
+  heroSubtitleEn String @default("")
+  heroSubtitleDv String @default("")
+
+  tickerEnabled Boolean @default(false)
+  tickerEn      String  @default("")
+  tickerDv      String  @default("")
+
+  hotline       String @default("")
+  phone         String @default("")
+  viber         String @default("")
+  email         String @default("")
+  officeHoursEn String @default("")
+  officeHoursDv String @default("")
+  addressEn     String @default("")
+  addressDv     String @default("")
+
+  mapLat  Float @default(5.1853)
+  mapLng  Float @default(73.126)
+  mapZoom Int   @default(15)
+
+  facebookUrl  String @default("")
+  twitterUrl   String @default("")
+  instagramUrl String @default("")
+  youtubeUrl   String @default("")
+
+  footerNoteEn String @default("")
+  footerNoteDv String @default("")
+
+  updatedAt DateTime @updatedAt
+}
+
+/// Official notices (އިޢުލާން), tenders/bids and job vacancies.
+model Announcement {
+  id        Int    @id @default(autoincrement())
+  refNumber String @default("")
+  /// NOTICE | TENDER | JOB
+  category  String @default("NOTICE")
+
+  titleEn   String @default("")
+  titleDv   String @default("")
+  contentEn String @default("")
+  contentDv String @default("")
+
+  publishDate DateTime  @default(now())
+  deadline    DateTime?
+
+  attachmentUrl  String @default("")
+  attachmentName String @default("")
+  attachmentSize Int    @default(0)
+
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, publishDate])
+}
+
+model News {
+  id   Int    @id @default(autoincrement())
+  slug String @unique
+
+  titleEn   String @default("")
+  titleDv   String @default("")
+  excerptEn String @default("")
+  excerptDv String @default("")
+  /// Sanitised HTML produced by the admin rich-text editor.
+  contentEn String @default("")
+  contentDv String @default("")
+
+  imageUrl String @default("")
+  /// COUNCIL | COMMUNITY | ENVIRONMENT | DEVELOPMENT | EVENTS
+  category String @default("COUNCIL")
+
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, publishedAt])
+}
+
+/// Councillors, WDC members and secretariat leadership.
+model Member {
+  id Int @id @default(autoincrement())
+  /// COUNCIL | WDC | ADMIN
+  group String @default("COUNCIL")
+
+  nameEn String @default("")
+  nameDv String @default("")
+  roleEn String @default("")
+  roleDv String @default("")
+  term   String @default("")
+
+  photoUrl String @default("")
+  email    String @default("")
+  phone    String @default("")
+  order    Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([group, order])
+}
+
+/// Downloads: forms, regulations, budgets, plans and reports.
+model Document {
+  id Int @id @default(autoincrement())
+  /// FORM | REGULATION | BUDGET | PLAN | REPORT | OTHER
+  category String @default("FORM")
+
+  titleEn       String @default("")
+  titleDv       String @default("")
+  descriptionEn String @default("")
+  descriptionDv String @default("")
+
+  fileUrl  String @default("")
+  fileName String @default("")
+  fileType String @default("")
+  fileSize Int    @default(0)
+  year     Int?
+
+  published   Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category, publishedAt])
+}
+
+/// E-Service cards shown on the home page and /services.
+model Service {
+  id Int @id @default(autoincrement())
+
+  titleEn       String @default("")
+  titleDv       String @default("")
+  descriptionEn String @default("")
+  descriptionDv String @default("")
+
+  /// Icon name from src/components/Icon.tsx
+  icon    String @default("FileText")
+  /// Optional link (e.g. /downloads?category=FORM). Empty = opens the inquiry form.
+  linkUrl String @default("")
+
+  featured Boolean @default(true)
+  active   Boolean @default(true)
+  order    Int     @default(0)
+
+  submissions Submission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Editable text blocks, addressed by key (see src/lib/constants.ts).
+model PageContent {
+  key      String @id
+  titleEn  String @default("")
+  titleDv  String @default("")
+  bodyEn   String @default("")
+  bodyDv   String @default("")
+  imageUrl String @default("")
+
+  updatedAt DateTime @updatedAt
+}
+
+/// Island statistics (population, land area, distance to Hanifaru Bay…).
+model IslandStat {
+  id      Int    @id @default(autoincrement())
+  labelEn String @default("")
+  labelDv String @default("")
+  value   String @default("")
+  unitEn  String @default("")
+  unitDv  String @default("")
+  icon    String @default("Users")
+  order   Int    @default(0)
+}
+
+/// Local facilities directory shown on /about.
+model Facility {
+  id            Int    @id @default(autoincrement())
+  nameEn        String @default("")
+  nameDv        String @default("")
+  descriptionEn String @default("")
+  descriptionDv String @default("")
+  phone         String @default("")
+  icon          String @default("Building2")
+  order         Int    @default(0)
+}
+
+/// Messages, complaints and service inquiries sent from the public portal.
+model Submission {
+  id        Int    @id @default(autoincrement())
+  reference String @unique
+  /// INQUIRY | COMPLAINT | SERVICE | FEEDBACK
+  type      String @default("INQUIRY")
+
+  name    String
+  phone   String @default("")
+  email   String @default("")
+  subject String @default("")
+  message String
+
+  serviceId Int?
+  service   Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  locale String @default("dv")
+  /// NEW | RESOLVED
+  status     String    @default("NEW")
+  adminNote  String    @default("")
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([status, createdAt])
+}

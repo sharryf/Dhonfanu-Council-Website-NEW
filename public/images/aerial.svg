@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 750" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8FD3DA"/>
+      <stop offset="1" stop-color="#E9F7F6"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#167D8D"/>
+      <stop offset=".5" stop-color="#3AB0BD"/>
+      <stop offset="1" stop-color="#B9E4E8"/>
+    </linearGradient>
+    <g id="palm">
+      <path d="M0 0c-4-46 4-92 22-136" fill="none" stroke="#5A4636" stroke-width="9" stroke-linecap="round"/>
+      <g fill="none" stroke="#2F8F6B" stroke-width="10" stroke-linecap="round">
+        <path d="M22-136c-28-26-62-26-84-4"/>
+        <path d="M22-136c28-28 64-28 88-4"/>
+        <path d="M22-136c-18-36-48-48-74-40"/>
+        <path d="M22-136c18-38 50-50 78-40"/>
+        <path d="M22-136c0-32 10-52 26-62"/>
+      </g>
+    </g>
+  </defs>
+  <rect width="1200" height="750" fill="url(#sky)"/>
+  <circle cx="930" cy="150" r="64" fill="#FFFFFF" opacity=".75"/>
+  <g fill="#FFFFFF" opacity=".85">
+    <path d="M150 150a34 34 0 0 1 64-14 44 44 0 0 1 82 14 30 30 0 0 1 4 60H160a30 30 0 0 1-10-60z"/>
+    <path d="M640 96a24 24 0 0 1 46-10 32 32 0 0 1 60 10 22 22 0 0 1 2 44H648a22 22 0 0 1-8-44z" opacity=".7"/>
+  </g>
+
+  <rect y="380" width="1200" height="370" fill="url(#sea)"/>
+  <!-- far reef line -->
+  <path d="M0 392h1200" stroke="#FFFFFF" stroke-opacity=".5" stroke-width="3"/>
+
+  <!-- island -->
+  <path d="M170 404c120-44 300-66 470-62s330 26 420 62z" fill="#2F8F6B"/>
+  <path d="M230 396c110-34 260-50 410-48s300 22 370 48z" fill="#3BA57E"/>
+  <path d="M120 410c160-16 340-22 520-20s330 8 470 20c-150 26-330 36-500 36s-340-10-490-36z" fill="#F6EFDC"/>
+  <g>
+    <use xlink:href="#palm" href="#palm" transform="translate(330 398) scale(.95)"/>
+    <use xlink:href="#palm" href="#palm" transform="translate(430 392) scale(1.2)"/>
+    <use xlink:href="#palm" href="#palm" transform="translate(560 388) scale(1.05) scale(-1 1)"/>
+    <use xlink:href="#palm" href="#palm" transform="translate(690 390) scale(1.3)"/>
+    <use xlink:href="#palm" href="#palm" transform="translate(800 394) scale(1) scale(-1 1)"/>
+    <use xlink:href="#palm" href="#palm" transform="translate(900 400) scale(.9)"/>
+  </g>
+  <!-- houses -->
+  <g>
+    <rect x="470" y="372" width="52" height="28" fill="#FFFFFF"/>
+    <path d="M462 374l34-20 34 20z" fill="#167D8D"/>
+    <rect x="600" y="366" width="64" height="34" fill="#FFFFFF"/>
+    <path d="M592 368l40-24 40 24z" fill="#071B2B"/>
+    <rect x="730" y="376" width="46" height="24" fill="#FFFFFF"/>
+    <path d="M722 378l31-18 31 18z" fill="#167D8D"/>
+  </g>
+
+  <!-- lagoon shimmer -->
+  <g fill="none" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="4" stroke-linecap="round">
+    <path d="M120 520c30-12 60-12 90 0s60 12 90 0"/>
+    <path d="M520 580c30-12 60-12 90 0s60 12 90 0 60-12 90 0"/>
+    <path d="M860 500c30-12 60-12 90 0s60 12 90 0"/>
+    <path d="M240 670c30-12 60-12 90 0s60 12 90 0"/>
+    <path d="M820 680c30-12 60-12 90 0s60 12 90 0"/>
+  </g>
+
+  <!-- dhoni -->
+  <g transform="translate(250 500)">
+    <path d="M0 0c40 14 120 14 170 0l-14 26H20z" fill="#071B2B"/>
+    <path d="M150-6c14-10 22-24 24-40-10 6-18 18-24 40z" fill="#071B2B"/>
+    <rect x="52" y="-22" width="62" height="22" rx="3" fill="#FFFFFF"/>
+    <path d="M46-22h74l-6-10H52z" fill="#167D8D"/>
+  </g>
+</svg>
