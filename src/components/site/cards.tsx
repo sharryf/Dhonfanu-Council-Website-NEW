@@ -66,7 +66,7 @@ export function AnnouncementItem({ item, locale, t }: { item: Announcement; loca
             {title}
           </Link>
         </h3>
-        <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-navy/60">
+        <dl className="font-sub mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-navy/60">
           <div className="flex items-center gap-1.5">
             <CalendarDays className="size-3.5 text-teal" aria-hidden="true" />
             <dt>{t.common.published}:</dt>
@@ -106,7 +106,7 @@ export function NewsCard({ item, locale, t, large = false }: { item: News; local
         <span className="badge-aqua absolute start-3 top-3 shadow-sm">{t.newsCat[cat]}</span>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <p className="mb-1.5 text-xs font-semibold text-teal">{formatDate(item.publishedAt, locale)}</p>
+        <p className="font-sub mb-1.5 text-xs font-semibold text-teal">{formatDate(item.publishedAt, locale)}</p>
         <h3 className={`font-bold text-navy ${large ? "text-xl sm:text-2xl" : "text-base sm:text-lg"}`} dir="auto">
           <Link href={`/news/${item.slug}`} className="after:absolute after:inset-0 group-hover:text-teal">
             {title}

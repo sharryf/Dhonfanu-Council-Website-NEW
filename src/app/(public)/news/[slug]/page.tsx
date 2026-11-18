@@ -51,7 +51,7 @@ export default async function NewsArticlePage({ params }: Props) {
         </Link>
         <div className="mb-3 flex flex-wrap items-center gap-3">
           <span className="badge-aqua">{t.newsCat[cat]}</span>
-          <span className="inline-flex items-center gap-1.5 text-sm text-navy/60">
+          <span className="font-sub inline-flex items-center gap-1.5 text-sm text-navy/60">
             <CalendarDays className="size-4 text-teal" aria-hidden="true" />
             {formatDate(item.publishedAt, locale)}
           </span>
@@ -60,7 +60,7 @@ export default async function NewsArticlePage({ params }: Props) {
           {title}
         </h1>
         {excerpt && (
-          <p className="mt-4 text-lg text-navy/70" dir="auto">
+          <p className="font-sub mt-4 text-lg text-navy/70" dir="auto">
             {excerpt}
           </p>
         )}

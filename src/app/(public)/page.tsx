@@ -44,7 +44,7 @@ export default async function HomePage() {
             {heroTitle}
           </h1>
           {heroSubtitle && (
-            <p className="mt-4 max-w-2xl text-base text-white/80 sm:text-lg" dir="auto">
+            <p className="font-sub mt-4 max-w-2xl text-base text-white/80 sm:text-lg" dir="auto">
               {heroSubtitle}
             </p>
           )}

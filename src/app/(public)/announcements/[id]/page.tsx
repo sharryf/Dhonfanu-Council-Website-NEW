@@ -65,7 +65,7 @@ export default async function AnnouncementPage({ params }: Props) {
         </article>
 
         <aside className="grid content-start gap-4">
-          <dl className="card divide-y divide-navy/5 text-sm">
+          <dl className="font-sub card divide-y divide-navy/5 text-sm">
             {item.refNumber && (
               <div className="flex items-start gap-3 p-4">
                 <Hash className="mt-1 size-4 shrink-0 text-teal" aria-hidden="true" />

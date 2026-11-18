@@ -20,11 +20,39 @@
 
   /* Latin glyphs come from Plus Jakarta Sans, Thaana glyphs from Noto Sans
      Thaana, with Faruma as the local fallback. One stack serves both languages. */
-  --font-sans: var(--font-jakarta), var(--font-thaana-noto), "Faruma", "MV Boli", ui-sans-serif, system-ui, sans-serif;
-  --font-thaana: var(--font-thaana-noto), "Faruma", "MV Boli", var(--font-jakarta), sans-serif;
+  --font-sans: var(--font-jakarta), "MV A Waheed", var(--font-thaana-noto), "Faruma", "MV Boli", ui-sans-serif, system-ui, sans-serif;
+  /* Dhivehi pages: A Waheed for body text, Aaamu FK for the main heading,
+     Typewriter for subtitles and dates (see the html[lang="dv"] rules below). */
+  --font-thaana: "MV A Waheed", var(--font-thaana-noto), "Faruma", "MV Boli", var(--font-jakarta), sans-serif;
+  --font-thaana-heading: "MV Aaamu FK", var(--font-thaana);
+  --font-thaana-sub: "MV Typewriter", var(--font-thaana);
 
   --shadow-card: 0 1px 2px rgb(7 27 43 / 0.04), 0 8px 24px -12px rgb(7 27 43 / 0.12);
   --shadow-lift: 0 2px 4px rgb(7 27 43 / 0.06), 0 18px 40px -16px rgb(7 27 43 / 0.25);
+}
+
+/* Self-hosted Dhivehi fonts (files in /public/fonts). A weight range is declared
+   so the browser never fakes a bold or light version of these single-weight files. */
+@font-face {
+  font-family: "MV Aaamu FK";
+  src: url("/fonts/MVAaamuFK.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MV A Waheed";
+  src: url("/fonts/MVAWaheed.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MV Typewriter";
+  src: url("/fonts/MVTypewriter.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* Faruma: uses the copy installed on the visitor's device. To self-host it,
@@ -49,7 +77,15 @@ body {
 
 /* Thaana needs more vertical room for its vowel marks (fili). */
 html[lang="dv"] body {
+  font-family: var(--font-thaana); /* A Waheed — default for <main> and everything inside */
   line-height: 1.95;
+}
+html[lang="dv"] h1 {
+  font-family: var(--font-thaana-heading); /* MV Aaamu FK */
+}
+/* Subtitles and dates under headings (add class "font-sub") */
+html[lang="dv"] .font-sub {
+  font-family: var(--font-thaana-sub); /* MV Typewriter */
 }
 html[lang="dv"] :is(h1, h2, h3, h4) {
   line-height: 1.7;
