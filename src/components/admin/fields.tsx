@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { FileText } from "lucide-react";
+import { FileText, Film } from "lucide-react";
 import { ICON_NAMES } from "@/components/Icon";
 import { formatBytes } from "@/lib/format";
 
@@ -173,7 +173,7 @@ export function FileInput({
   currentSize,
   fallbackUrl,
 }: Common & {
-  kind: "image" | "document";
+  kind: "image" | "document" | "video";
   currentUrl?: string | null;
   currentName?: string | null;
   currentSize?: number | null;
@@ -181,8 +181,18 @@ export function FileInput({
   fallbackUrl?: string;
 }) {
   const id = useId();
-  const accept = kind === "image" ? "image/png,image/jpeg,image/webp,image/gif" : ".pdf,.doc,.docx,.xls,.xlsx,application/pdf";
-  const limits = kind === "image" ? "JPG, PNG, WebP or GIF, up to 5 MB." : "PDF, Word or Excel, up to 20 MB.";
+  const accept =
+    kind === "image"
+      ? "image/png,image/jpeg,image/webp,image/gif"
+      : kind === "video"
+        ? ".mp4,.webm,video/mp4,video/webm"
+        : ".pdf,.doc,.docx,.xls,.xlsx,application/pdf";
+  const limits =
+    kind === "image"
+      ? "JPG, PNG, WebP or GIF, up to 5 MB."
+      : kind === "video"
+        ? "MP4 (H.264) or WebM, up to 24 MB."
+        : "PDF, Word or Excel, up to 20 MB.";
   return (
     <div>
       <label htmlFor={id} className="label">
@@ -195,9 +205,11 @@ export function FileInput({
             alt=""
             className={`h-20 w-28 shrink-0 rounded-lg bg-white object-cover ring-1 ring-navy/10 ${currentUrl ? "" : "opacity-60"}`}
           />
+        ) : kind === "video" && currentUrl ? (
+          <video src={currentUrl} muted loop autoPlay playsInline className="h-20 w-28 shrink-0 rounded-lg bg-navy object-cover ring-1 ring-navy/10" />
         ) : (
           <span className="flex h-20 w-28 shrink-0 items-center justify-center rounded-lg bg-white text-teal ring-1 ring-navy/10">
-            <FileText className="size-7" aria-hidden="true" />
+            {kind === "video" ? <Film className="size-7" aria-hidden="true" /> : <FileText className="size-7" aria-hidden="true" />}
           </span>
         )}
         <div className="min-w-0 flex-1">
@@ -210,7 +222,9 @@ export function FileInput({
               {currentSize ? ` · ${formatBytes(currentSize)}` : ""}
             </p>
           ) : (
-            <p className="mb-2 text-xs text-navy/55">{kind === "image" ? "No image uploaded — the default placeholder is shown." : "No file uploaded yet."}</p>
+            <p className="mb-2 text-xs text-navy/55">
+              {kind === "image" ? "No image uploaded — the default placeholder is shown." : kind === "video" ? "No video — the banner image is shown instead." : "No file uploaded yet."}
+            </p>
           )}
           <input
             id={id}

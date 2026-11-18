@@ -5,6 +5,7 @@ import { getContext, getPageContent } from "@/lib/site";
 import { pick } from "@/lib/i18n";
 import { formatBytes, telHref } from "@/lib/format";
 import { Icon } from "@/components/Icon";
+import { HeroVideo } from "@/components/site/HeroVideo";
 import { SearchForm } from "@/components/site/SearchForm";
 import { AnnouncementItem, EmptyState, NewsCard, SectionHeading } from "@/components/site/cards";
 
@@ -37,6 +38,14 @@ export default async function HomePage() {
           fetchPriority="high"
           className="absolute inset-0 -z-20 size-full object-cover"
         />
+        {site.heroVideoUrl && (
+          <HeroVideo
+            src={site.heroVideoUrl}
+            poster={site.heroImageUrl || "/images/hero.svg"}
+            pauseLabel={t.common.pauseVideo}
+            playLabel={t.common.playVideo}
+          />
+        )}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy/85 via-navy/70 to-navy/90" />
         <div className="container-page pb-24 pt-14 sm:pb-28 sm:pt-20">
           <p className="badge-aqua mb-4">{t.atoll}</p>

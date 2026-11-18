@@ -8,9 +8,12 @@ export const UPLOAD_ROOT = path.join(process.cwd(), "public", "uploads");
 
 const IMAGE_EXT = ["jpg", "jpeg", "png", "webp", "gif"];
 const DOCUMENT_EXT = ["pdf", "doc", "docx", "xls", "xlsx"];
+const VIDEO_EXT = ["mp4", "webm"];
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 export const MAX_DOCUMENT_BYTES = 20 * 1024 * 1024;
+// Kept below the 25 MB Server Action body limit (next.config.ts) to leave room for the other form fields.
+export const MAX_VIDEO_BYTES = 24 * 1024 * 1024;
 
 export const MIME_BY_EXT: Record<string, string> = {
   jpg: "image/jpeg",
@@ -19,6 +22,8 @@ export const MIME_BY_EXT: Record<string, string> = {
   webp: "image/webp",
   gif: "image/gif",
   svg: "image/svg+xml",
+  mp4: "video/mp4",
+  webm: "video/webm",
   pdf: "application/pdf",
   doc: "application/msword",
   docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -48,6 +53,10 @@ function contentMatches(ext: string, buf: Buffer): boolean {
       return buf.subarray(0, 4).toString("latin1") === "GIF8";
     case "webp":
       return buf.subarray(0, 4).toString("latin1") === "RIFF" && buf.subarray(8, 12).toString("latin1") === "WEBP";
+    case "mp4":
+      return buf.subarray(4, 8).toString("latin1") === "ftyp";
+    case "webm":
+      return startsWith(buf, [0x1a, 0x45, 0xdf, 0xa3]); // EBML header
     case "docx":
     case "xlsx":
       return startsWith(buf, [0x50, 0x4b]); // zip container
@@ -63,17 +72,17 @@ function contentMatches(ext: string, buf: Buffer): boolean {
  * Saves an uploaded file under /public/uploads/<year>/ and returns its public URL.
  * Returns null when no file was selected.
  */
-export async function saveUpload(file: unknown, kind: "image" | "document"): Promise<SavedUpload | null> {
+export async function saveUpload(file: unknown, kind: "image" | "document" | "video"): Promise<SavedUpload | null> {
   if (!(file instanceof File) || file.size === 0) return null;
 
   const original = file.name || "file";
   const ext = (original.split(".").pop() || "").toLowerCase();
-  const allowed = kind === "image" ? IMAGE_EXT : DOCUMENT_EXT;
+  const allowed = kind === "image" ? IMAGE_EXT : kind === "video" ? VIDEO_EXT : DOCUMENT_EXT;
   if (!allowed.includes(ext)) {
     throw new UploadError(`"${original}" is not an allowed file type. Allowed: ${allowed.join(", ")}.`);
   }
 
-  const max = kind === "image" ? MAX_IMAGE_BYTES : MAX_DOCUMENT_BYTES;
+  const max = kind === "image" ? MAX_IMAGE_BYTES : kind === "video" ? MAX_VIDEO_BYTES : MAX_DOCUMENT_BYTES;
   if (file.size > max) {
     throw new UploadError(`"${original}" is too large. The limit is ${Math.round(max / 1024 / 1024)} MB.`);
   }

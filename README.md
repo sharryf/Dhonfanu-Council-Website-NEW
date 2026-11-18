@@ -58,6 +58,13 @@ To wipe content and re-seed without dropping the admin account: `SEED_FORCE=1 np
 Council / WDC / staff, Downloads, E-Services, Island profile (page texts, statistics, facilities),
 Site settings (names, logo, hero, ticker, contacts, map, social links), My account.
 
+**Hero video** — In `/admin/settings`, staff can upload an optional MP4/WebM background video for the home page
+(up to 24 MB; aim for a silent 10–20 second 1080p loop under 8 MB). The banner image stays as its poster and as the
+fallback for visitors who prefer reduced motion or use data-saver. Visitors get a pause button.
+A sample loop is included for demos: `npm run db:seed-video` installs it (only if no hero video is set; add
+`-- --force` to replace the current one). It never deletes content, so it is safe on a live site. `npm run setup`
+installs it too.
+
 **Languages** — The visitor's choice is stored in a `locale` cookie (Dhivehi by default) and applied as
 `<html lang dir>` in `src/app/(public)/layout.tsx`. Every content field has `…En` / `…Dv` columns; if one is
 blank the other language is shown (`pick()` in `src/lib/i18n.ts`). Interface strings live in the same file.

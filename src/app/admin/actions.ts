@@ -49,7 +49,7 @@ function refresh() {
  * Handles a FileInput: returns the new upload, "removed" when the box was
  * ticked, or null when the current file should be kept.
  */
-async function fileChange(fd: FormData, name: string, kind: "image" | "document"): Promise<SavedUpload | "removed" | null> {
+async function fileChange(fd: FormData, name: string, kind: "image" | "document" | "video"): Promise<SavedUpload | "removed" | null> {
   const saved = await saveUpload(fd.get(name), kind);
   if (saved) return saved;
   return bool(fd, `${name}Remove`) ? "removed" : null;
@@ -98,6 +98,7 @@ export async function saveSettings(_prev: FormState, fd: FormData): Promise<Form
     const existing = await prisma.siteConfig.findUnique({ where: { id: 1 } });
     const logo = await fileChange(fd, "logo", "image");
     const hero = await fileChange(fd, "heroImage", "image");
+    const heroVideo = await fileChange(fd, "heroVideo", "video");
 
     const lat = Number.parseFloat(str(fd, "mapLat"));
     const lng = Number.parseFloat(str(fd, "mapLng"));
@@ -137,11 +138,13 @@ export async function saveSettings(_prev: FormState, fd: FormData): Promise<Form
       footerNoteDv: str(fd, "footerNoteDv", 300),
       ...(logo ? { logoUrl: logo === "removed" ? "" : logo.url } : {}),
       ...(hero ? { heroImageUrl: hero === "removed" ? "" : hero.url } : {}),
+      ...(heroVideo ? { heroVideoUrl: heroVideo === "removed" ? "" : heroVideo.url } : {}),
     };
 
     await prisma.siteConfig.upsert({ where: { id: 1 }, update: data, create: { id: 1, ...data } });
     if (logo) await removeUpload(existing?.logoUrl);
     if (hero) await removeUpload(existing?.heroImageUrl);
+    if (heroVideo) await removeUpload(existing?.heroVideoUrl);
   } catch (err) {
     return fail(errorMessage(err));
   }

@@ -73,6 +73,8 @@ const en = {
     urgent: "Notice",
     call: "Call",
     results: "results",
+    pauseVideo: "Pause background video",
+    playVideo: "Play background video",
   },
 
   annCat: { ALL: "All", NOTICE: "General Notices", TENDER: "Tenders & Bids", JOB: "Jobs" },
@@ -280,6 +282,8 @@ const dv: Dict = {
     urgent: "ސަމާލުކަމަށް",
     call: "ގުޅުއްވާ",
     results: "ނަތީޖާ",
+    pauseVideo: "ބެކްގްރައުންޑް ވީޑިއޯ ހުއްޓުވާ",
+    playVideo: "ބެކްގްރައުންޑް ވީޑިއޯ ފެށުއްވާ",
   },
 
   annCat: { ALL: "ހުރިހާ", NOTICE: "ޢާންމު އިޢުލާން", TENDER: "ބީލަންތައް", JOB: "ވަޒީފާ" },

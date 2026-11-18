@@ -30,6 +30,8 @@ model SiteConfig {
   logoUrl       String @default("")
 
   heroImageUrl   String @default("")
+  /// Optional looping background video (MP4/WebM). The hero image is its poster and fallback.
+  heroVideoUrl   String @default("")
   heroTitleEn    String @default("")
   heroTitleDv    String @default("")
   heroSubtitleEn String @default("")

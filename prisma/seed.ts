@@ -12,6 +12,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { mkdirSync, writeFileSync, statSync } from "fs";
 import path from "path";
+import { seedHeroVideo } from "./seed-hero-video";
 
 const prisma = new PrismaClient();
 
@@ -611,6 +612,8 @@ async function main() {
       },
     });
   }
+
+  await seedHeroVideo(prisma);
 
   console.log("Seed complete: site settings, page texts, statistics, facilities, services, members, announcements, news, documents and sample messages.");
 }

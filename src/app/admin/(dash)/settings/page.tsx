@@ -21,7 +21,14 @@ export default async function SettingsPage() {
         <Section title="Home page hero" description="The large banner at the top of the home page.">
           <Bilingual label="Headline" name="heroTitle" en={s.heroTitleEn} dv={s.heroTitleDv} />
           <Bilingual label="Subtitle" name="heroSubtitle" en={s.heroSubtitleEn} dv={s.heroSubtitleDv} multiline rows={2} />
-          <FileInput label="Banner image" name="heroImage" kind="image" currentUrl={s.heroImageUrl} fallbackUrl="/images/hero.svg" hint="Wide landscape photo, at least 1600 px wide. Up to 5 MB." />
+          <FileInput label="Banner image" name="heroImage" kind="image" currentUrl={s.heroImageUrl} fallbackUrl="/images/hero.svg" hint="Wide landscape photo, at least 1600 px wide. Up to 5 MB. Also shown while the video loads and to visitors who prefer reduced motion." />
+          <FileInput
+            label="Background video (optional)"
+            name="heroVideo"
+            kind="video"
+            currentUrl={s.heroVideoUrl}
+            hint="Plays muted and looped behind the headline. Best: 10–20 second loop, 1920×1080 or smaller, no sound, MP4 (H.264), under 8 MB so it loads fast on mobile data. Maximum 24 MB."
+          />
         </Section>
 
         <Section title="Urgent notice ticker" description="Scrolling strip under the navigation. Separate several notices with the | character.">

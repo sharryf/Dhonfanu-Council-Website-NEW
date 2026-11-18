@@ -11,6 +11,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "db:seed-video": "tsx prisma/seed-hero-video.ts",
     "db:reset": "prisma db push --force-reset && prisma db seed",
     "setup": "prisma db push && prisma db seed"
   },
